@@ -32,15 +32,35 @@
 
     <!--通过aop配置提供事务增强，让service包下的bean所有方法拥有事务-->
     <aop:config proxy-target-class="true">
-         <aop:pointcut id="serviceMethod" expression=" execution(* com.smart.service..*(..))"/>
-         <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod"/>
+        <aop:pointcut id="serviceMethod" expression=" execution(* com.smart.service..*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod"/>
     </aop:config>
-    
+
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
             <tx:method name="*"/>
         </tx:attributes>
     </tx:advice>
+
+    <bean id="car1" class="com.smart.domain.Car"
+          p:brand="奔驰"
+          p:color="黑色"
+          p:maxSpeed="200"
+
+    >
+        <property name="fav">
+            <map>
+                <entry>
+                    <key><value>app</value></key>
+                    <value>togo</value>
+                </entry>
+                <entry>
+                    <key><value>app2</value></key>
+                    <value>togo2</value>
+                </entry>
+            </map>
+        </property>
+    </bean>
 
 
 </beans>
