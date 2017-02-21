@@ -12,29 +12,27 @@
        http://www.springframework.org/schema/aop
        http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
 
-    <!--扫描包-->
-    <context:component-scan base-package="com.smart"/>
+
+
+    <context:component-scan base-package="com.forum"/>
+    <context:property-placeholder location="jdbc.properties"/>
 
     <!--定义一个dbcp的数据源-->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-          destroy-method="close" p:driverClassName="com.mysql.jdbc.Driver"
-          p:url="jdbc:mysql://localhost:3306/sampledb"
-          p:username="root"
-          p:password="1234"
+          destroy-method="close" p:driverClassName="${jdbc.driverClass}"
+          p:url="${jdbc.jdbcUrl}"
+          p:username="${jdbc.user}"
+          p:password="${jdbc.password}"
     />
 
-    <!--定义jdbc模板bean-->
-    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"
-          p:dataSource-ref="dataSource"/>
-    <!--配置事务管理器-->
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
-          p:dataSource-ref="dataSource"/>
+   <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+       <property name="dataSource" ref="dataSource"/>
+       <property name="configLocation" value="hibernate.cfg.xml"/>
+   </bean>
 
-    <!--通过aop配置提供事务增强，让service包下的bean所有方法拥有事务-->
-    <aop:config proxy-target-class="true">
-        <aop:pointcut id="serviceMethod" expression=" execution(* com.smart.service..*(..))"/>
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod"/>
-    </aop:config>
+   <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+       <property name="sessionFactory" ref="sessionFactory"/>
+   </bean>
 
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
@@ -42,5 +40,8 @@
         </tx:attributes>
     </tx:advice>
 
-
+    <aop:config>
+        <aop:pointcut id="ex" expression=" execution(* com.forum.service..*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="ex"/>
+    </aop:config>
 </beans>

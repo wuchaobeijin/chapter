@@ -44,7 +44,19 @@
     <modules>
         <module>chapter1</module>
         <module>chapter2</module>
+        <module>forum</module>
+        <module>Concurrent</module>
     </modules>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 
 </project>

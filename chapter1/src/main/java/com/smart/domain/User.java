@@ -1,20 +1,34 @@
 package com.smart.domain;
 
-import java.io.Serializable;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
 import java.util.Date;
 
 /**
- * user实体类
- *
- * @author : 吴超
- * @date : 2017-02-07
+ * @author: wuchao
+ * @date： 2017/2/20
  */
-public class User implements Serializable {
-    private int userId;
-    private String userName;
-    private String password;
-    private String lastIp;
-    private Date lastVisit;
+@Entity
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Table(name = "t_user")
+public class User extends BaseDomain {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    protected int userId;
+
+    @Column(name = "user_name")
+    protected String userName;
+
+    protected String password;
+
+    @Column(name = "last_visit")
+    protected Date lastVisit;
+
+    @Column(name = "last_ip")
+    protected String lastIp;
 
     public int getUserId() {
         return userId;
@@ -40,6 +54,14 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    public Date getLastVisit() {
+        return lastVisit;
+    }
+
+    public void setLastVisit(Date lastVisit) {
+        this.lastVisit = lastVisit;
+    }
+
     public String getLastIp() {
         return lastIp;
     }
@@ -48,11 +70,14 @@ public class User implements Serializable {
         this.lastIp = lastIp;
     }
 
-    public Date getLastVisit() {
-        return lastVisit;
+    public static void main(String[] args) {
+        User user = new User();
+        user.setLastIp("123-123-ip");
+        user.setLastVisit(new Date());
+        user.setUserId(1);
+        user.setUserName("adad");
+        user.setPassword("12334555");
+        System.out.println(user.toString());
     }
 
-    public void setLastVisit(Date lastVisit) {
-        this.lastVisit = lastVisit;
-    }
 }
