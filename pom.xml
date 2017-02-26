@@ -46,6 +46,7 @@
         <module>chapter2</module>
         <module>forum</module>
         <module>Concurrent</module>
+        <module>design</module>
     </modules>
     <build>
         <plugins>
