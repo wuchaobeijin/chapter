@@ -30,17 +30,20 @@
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
           p:dataSource-ref="dataSource"/>
 
-    <!--通过aop配置提供事务增强，让service包下的bean所有方法拥有事务-->
-    <aop:config proxy-target-class="true">
-        <aop:pointcut id="serviceMethod" expression=" execution(* com.smart.service..*(..))"/>
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod"/>
-    </aop:config>
+    <!--&lt;!&ndash;通过aop配置提供事务增强，让service包下的bean所有方法拥有事务&ndash;&gt;-->
+    <!--<aop:config proxy-target-class="true">-->
+        <!--<aop:pointcut id="serviceMethod" expression=" execution(* com.smart.service..*(..))"/>-->
+        <!--<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod"/>-->
+    <!--</aop:config>-->
 
-    <tx:advice id="txAdvice" transaction-manager="transactionManager">
-        <tx:attributes>
-            <tx:method name="*"/>
-        </tx:attributes>
-    </tx:advice>
+    <!--<tx:advice id="txAdvice" transaction-manager="transactionManager">-->
+        <!--<tx:attributes>-->
+            <!--<tx:method name="*"/>-->
+        <!--</tx:attributes>-->
+    <!--</tx:advice>-->
+
+
+
 
 
 </beans>

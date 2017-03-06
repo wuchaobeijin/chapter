@@ -47,6 +47,7 @@
         <module>forum</module>
         <module>Concurrent</module>
         <module>design</module>
+        <module>jfinal</module>
     </modules>
     <build>
         <plugins>
