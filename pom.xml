@@ -48,6 +48,7 @@
         <module>Concurrent</module>
         <module>design</module>
         <module>jfinal</module>
+        <module>jfinal</module>
     </modules>
     <build>
         <plugins>
